@@ -17,8 +17,8 @@
 
     #squares>div {
         display: inline-block;
-        width: 124px;
-        height: 70px;
+        width: 135px;
+        height: 77px;
         margin: 24px 10px 0px 10px;
         background: rgba(0, 0, 0, .1);
         text-align: center;
@@ -52,10 +52,10 @@
 
 
 <script>
-    var date = "2019-06-24";   //6/24/19
+    var date = "2019-06-24";   
     var requestURL = `http://statsapi.mlb.com/api/v1/schedule?hydrate=game(content(editorial(recap)))%2Cdecisions&date=${date}&sportId=1&fbclid=IwAR13zWLt0ZZxrQXy-6oQMnY847KQUyonpOtoJlxOx1MCMbYKVclqArawLi0`;
     var request = new XMLHttpRequest();
-    var array, index = 0;   // Variables for square array, and square index variable
+    var array, index = 0; 
 
     request.open("GET", requestURL);
     request.responseType = "text";
@@ -67,11 +67,7 @@
             var majorBaseball = JSON.parse(baseballText);
             populateContent(majorBaseball);
             showPictures(majorBaseball);
-
-            //set attributes for FIRST one
-            array[0].style.border = "2px solid white";
-            array[0].style.width = "135px";
-            array[0].style.height = "77px";
+            array[0].style.border = "5px solid white";
         }
         else {
             alert("Wrong status request.Check back later!");
@@ -83,10 +79,10 @@
         return document.getElementById(x);
     }
 
-    //show pictures
+    //display pictures depending on JSON array lenght 
     function showPictures(jsonObj) {
         for (i = 0; i < jsonObj.dates[0].games.length; i++) {
-            var el = document.getElementById("squares"),
+            var el = _("squares"),
                 elChild = document.createElement("div");
             elChild.setAttribute("onclick", "squares(" + i + ")");
             elChild.innerHTML = "<img src='" + jsonObj.dates[0].games[i].content.editorial.recap.mlb.image.cuts[17].src + "'/>";
@@ -96,7 +92,7 @@
         }
     }
 
-    //show header and return array lenght
+    //show header and return array lenght 
     function populateContent(jsonObj) {
         _("textHeader").innerHTML = jsonObj.dates[0].games[0].venue.name;
         _("textContext").innerHTML = jsonObj.dates[0].games[0].content.editorial.recap.mlb.headline;
@@ -110,23 +106,16 @@
 
     // This function is triggered when the keyboard is changed
     function squares(index) {
-        // Fade-out the content
         _("squarecontent").style.opacity = 0;
-        // Loop over all other the squares 
         for (var i = 0; i < mlbContent.length; i++) {
             array[i].style.border = "0";
-            array[i].style.width = "124px";
-            array[i].style.height = "70px";
         }
-        //Target square
-        array[index].style.border = "2px solid white";
-        array[index].style.width = "135px";
-        array[index].style.height = "77px";
+        array[index].style.border = "5px solid white";
 
-        // Stall the bubble and content changing for just 300ms
+        // Smooth Transition Effect + change content text
         setTimeout(function () {
-            _("squarecontent").innerHTML = mlbContent[index];  // Change the content text
-            _("squarecontent").style.opacity = 1;  // Fade-in the content
+            _("squarecontent").innerHTML = mlbContent[index];  
+            _("squarecontent").style.opacity = 1; 
         }, 200);
     }
 
