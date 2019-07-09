@@ -50,7 +50,7 @@ function populateContent(jsonObj) {
     return mlbContent;
 }
 
-// This function is triggered when the keyboard is changed
+// This function is triggered when the keyboard is changed to keep track of what content up with the index
 function squares(index) {
     _("squarecontent").style.opacity = 0;
     for (var i = 0; i < mlbContent.length; i++) {
